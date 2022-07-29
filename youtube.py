@@ -19,7 +19,7 @@ os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 api_service_name = "youtube"
 api_version = "v3"
 client_secrets_file = "desktop_secret.json"
-topics = ["Ethnicity", "corruption", "Nigeria is not working", "constitution", "constitutionalism", "1999 constitution", "Nigerian constitution", "rule of law", "justice", "exclusive list", "concurrent list", "separation of power", "peace", "security", "law and order", "insecurity", "insurgency", "security votes"]
+topics = ["corruption", "Nigeria is not working", "constitution", "constitutionalism", "1999 constitution", "Nigerian constitution", "rule of law", "justice", "exclusive list", "concurrent list", "separation of power", "peace", "security", "law and order", "insecurity", "insurgency", "security votes"]
 scopes = ["https://www.googleapis.com/auth/youtube.force-ssl"]
 def scrape_youtube(topic, basepath):
    #  # Get credentials and create an API client
@@ -55,7 +55,7 @@ def scrape_youtube(topic, basepath):
 
     file = open(f'{basepath}/youtube-{topic}.csv', "w")
     writter = csv.writer(file)
-    writter.writerows(header)
+    writter.writerow(header)
     writetofile(results, writter=writter)
     
 def scrapeThreadhing():
@@ -72,7 +72,10 @@ def scrapeThreadhing():
 def main():
     # Disable OAuthlib's HTTPS verification when running locally.
     # *DO NOT* leave this option enabled in production.
-    scrapeThreadhing()
+    basepath = f'new/youtube'
+    for topic in topics:
+        scrape_youtube(topic, basepath)
+
 def writetofile(data, writter):
    for d in data:
       # print(d)
